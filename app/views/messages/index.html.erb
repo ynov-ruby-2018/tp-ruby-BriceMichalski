@@ -1,0 +1,39 @@
+
+<div class="form col-md-12">
+
+    <%= form_tag messages_path, method: :post do %>
+      <%= text_area_tag 'message[content]', @message.content,id: 'comment', class: 'col-md-12' %>
+      <%= submit_tag 'Save', class: 'btn btn-success custombtn col-md-2' %>
+    <% end %>
+
+
+</div>
+
+<hr>
+<div class="message-container">
+  <% @messages.each do |message| %>
+      <div class="msg">
+        <div class="col-md-12 message">
+          <h4 class="col-md-12"><%=message.user.email %></h4>
+          <p class="col-md-12"><%=message.content %></p>
+          <div class="col-md-12">
+            <p class="col-md-6">Like : <%=message.likes.length %></p>
+            <p class="col-md-6">Dislike : <%=message.dislikes.length %></p>
+          </div>
+
+          <div class="row">
+            <%= form_tag message_like_path, method: :post, class: "col s1 row"  do %>
+              <%=hidden_field_tag 'like[message_id]', message.id %>
+              <%= submit_tag 'Like', class: 'btn btn-success col-md-6' %>
+            <% end %>
+            <%= form_tag message_dislike_path, method: :post, class: "col s1 row"  do %>
+              <%=hidden_field_tag 'dislike[message_id]', message.id %>
+              <%= submit_tag 'Dislike', class: 'btn btn-danger col-md-6' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+  <% end %>
+</div>
+
